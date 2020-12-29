@@ -1,0 +1,23 @@
+{
+    "api" : {
+        "seeding" : {
+            "start" : {
+                "endpoint" :"/start",
+                "method" : "POST",
+                "payload" : {}
+            },
+            "stop" : {
+                "endpoint" :"/stop",
+                "method" : "POST",
+                "payload" : {}
+            }
+        },
+        "configuration" : {
+            "change" : {
+                "endpoint" : "/configuration",
+                "method" : "PUT",
+                "payload" : {}
+            }
+        }
+    }
+}

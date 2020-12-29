@@ -1,0 +1,8 @@
+{
+    "needRestartToTakeEffect": false,
+    "runtimeConfig": {
+      "minimumBytesPerSeconds": 50,
+      "maximumBytesPerSeconds": 250,
+      "client": "qBittorrent-4.1.0"
+    }
+  }
