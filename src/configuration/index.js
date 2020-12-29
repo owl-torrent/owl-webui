@@ -4,10 +4,9 @@ import config from "react-global-configuration";
 import { get_env } from "./env";
 
 class configFetcher {
-  constructor(endpoint, mockPath, name) {
+  constructor(endpoint, mockPath) {
     this.endpoint = endpoint;
     this.mockPath = mockPath;
-    this.name = name;
   }
 
   fetchIt = () => {
@@ -20,43 +19,32 @@ class configFetcher {
     const promise = this.fetchIt();
     if (!promise) {
       console.error(
-        `Error during initial ${this.name} this might be because you did not define the environment variable for that configuration object`
+        `Error during initial configuration this might be because you did not define the environment variable for that configuration object`
       );
       return false;
     }
     const [err, it] = await handleAsync(this.fetchIt());
     if (err) {
-      console.error(`Error during initial ${this.name} ${err}`);
+      console.error(`Error during initial configuration ${err}`);
       return false;
     }
-    return { [this.name]: it.data };
+    return it.data;
   };
 }
 
 export const fetchConfig = async () => {
-  let fetchers = [];
-  const env = await get_env();
-  if (!env.length) {
+  const [endpoint, mockPath] = await get_env();
+  if (!endpoint && !mockPath) {
     return false;
   }
-
-  env.forEach(([endpoint, mockPath, name]) => {
-    const fetcher = new configFetcher(endpoint, mockPath, name);
-    fetchers.push(fetcher.getIt());
-  });
-
-  const fetched = await Promise.all(fetchers).then((fetchedConfigs) => {
-    let conf = {};
-    fetchedConfigs.forEach((fetchedConfig) => {
-      conf = { ...conf, ...fetchedConfig };
-    });
-    console.log("This is the initial configuration for Joal WebUi :", conf);
-    try {
-      config.set(conf, { freeze: false });
-      return true;
-    } catch (error) {
-      return false;
-    }
-  });
-  return fetched;
+  const fetcher = new configFetcher(endpoint, mockPath);
+  const conf = await fetcher.getIt();
+  console.log("this is the initial joal configuration :", conf);
+  try {
+    config.set(conf, { freeze: false });
+    return true;
+  } catch (error) {
+    console.error(`Error during setting react global configuration ${error}`);
+    return false;
+  }
 };

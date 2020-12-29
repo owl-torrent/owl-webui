@@ -13,10 +13,20 @@
             }
         },
         "configuration" : {
+            "get" : {
+                "endpoint" : "./config/config.json",
+                "method" : "GET"
+            },
             "change" : {
                 "endpoint" : "/configuration",
                 "method" : "PUT",
                 "payload" : {}
+            }
+        },
+        "state" : {
+            "get" : {
+                "endpoint" : "./config/mockState.json",
+                "method" : "GET"
             }
         }
     }

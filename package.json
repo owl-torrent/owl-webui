@@ -17,7 +17,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "REACT_APP_CONFIG_PATH=./config/config.json REACT_APP_MOCK_STATE_PATH=./config/mockState.json REACT_APP_MOCK_JOAL_CONF_PATH=./config/mockJoalConfig.json react-scripts start",
+    "start": "REACT_APP_CONFIG_PATH=./config/config.json react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
