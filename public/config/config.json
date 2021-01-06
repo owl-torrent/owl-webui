@@ -1,7 +1,6 @@
 {
     "api": {
-        "baseUrl": "https://8aa37423-5867-4c17-913b-7cc23b16d780.mock.pstmn.io",
-        "seeding": {
+        "seed": {
             "start": {
                 "url": "/start",
                 "method": "POST"
@@ -17,13 +16,25 @@
                 "method": "GET"
             },
             "change": {
-                "endpoint": "/configuration",
+                "url": "/configuration",
                 "method": "PUT"
+            }
+        },
+        "torrents": {
+            "delete": {
+                "url": "/torrents",
+                "method": "DELETE"
+            }
+        },
+        "clients": {
+            "get": {
+                "url": "/clients/all",
+                "method": "GET"
             }
         },
         "state": {
             "get": {
-                "endpoint": "/state",
+                "url": "/state",
                 "method": "GET"
             }
         }

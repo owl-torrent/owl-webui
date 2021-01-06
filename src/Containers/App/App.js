@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchConfig } from "../../configuration";
 import Page404 from "../../components/ErrorPages/404/404"
-import OwlWebUi from "../OwlWebUi/OwlWebUi"
+import OwlWebUi from "../OwlWebUi/container"
 const App = () => {
   const [config, setConfig] = useState(null)
 

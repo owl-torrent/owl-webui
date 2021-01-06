@@ -1,9 +1,12 @@
-
-import client from "./client";
+import client from "./HTTPFactory";
 import config from "react-global-configuration";
 
-const api_config = config.get("configuration")
+const routes = () => config.get("api").configuration;
 
-export const get_configuration = async (sign_id) => {
-    return await client.get_instance()(api_config.get)
+export const get_configuration = async () => {
+    return await client.get_instance()(routes().get)
 };
+
+export const change_configuration = async (data) => {
+    return await client.get_instance()({ ...routes().change, data })
+}
