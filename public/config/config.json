@@ -1,32 +1,30 @@
 {
-    "api" : {
-        "seeding" : {
-            "start" : {
-                "endpoint" :"/start",
-                "method" : "POST",
-                "payload" : {}
+    "api": {
+        "baseUrl": "https://8aa37423-5867-4c17-913b-7cc23b16d780.mock.pstmn.io",
+        "seeding": {
+            "start": {
+                "url": "/start",
+                "method": "POST"
             },
-            "stop" : {
-                "endpoint" :"/stop",
-                "method" : "POST",
-                "payload" : {}
+            "stop": {
+                "endpoint": "/stop",
+                "method": "POST"
             }
         },
-        "configuration" : {
-            "get" : {
-                "endpoint" : "./config/config.json",
-                "method" : "GET"
+        "configuration": {
+            "get": {
+                "url": "/configuration",
+                "method": "GET"
             },
-            "change" : {
-                "endpoint" : "/configuration",
-                "method" : "PUT",
-                "payload" : {}
+            "change": {
+                "endpoint": "/configuration",
+                "method": "PUT"
             }
         },
-        "state" : {
-            "get" : {
-                "endpoint" : "./config/mockState.json",
-                "method" : "GET"
+        "state": {
+            "get": {
+                "endpoint": "/state",
+                "method": "GET"
             }
         }
     }
