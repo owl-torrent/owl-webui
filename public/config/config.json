@@ -38,5 +38,6 @@
                 "method": "GET"
             }
         }
-    }
+    },
+    "globalStateKeys" : ["started"]
 }
