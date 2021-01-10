@@ -1,33 +1,43 @@
 {
-    "api" : {
-        "seeding" : {
-            "start" : {
-                "endpoint" :"/start",
-                "method" : "POST",
-                "payload" : {}
+    "api": {
+        "seed": {
+            "start": {
+                "url": "/start",
+                "method": "POST"
             },
-            "stop" : {
-                "endpoint" :"/stop",
-                "method" : "POST",
-                "payload" : {}
+            "stop": {
+                "endpoint": "/stop",
+                "method": "POST"
             }
         },
-        "configuration" : {
-            "get" : {
-                "endpoint" : "./config/config.json",
-                "method" : "GET"
+        "configuration": {
+            "get": {
+                "url": "/configuration",
+                "method": "GET"
             },
-            "change" : {
-                "endpoint" : "/configuration",
-                "method" : "PUT",
-                "payload" : {}
+            "change": {
+                "url": "/configuration",
+                "method": "PUT"
             }
         },
-        "state" : {
-            "get" : {
-                "endpoint" : "./config/mockState.json",
-                "method" : "GET"
+        "torrents": {
+            "delete": {
+                "url": "/torrents",
+                "method": "DELETE"
+            }
+        },
+        "clients": {
+            "get": {
+                "url": "/clients/all",
+                "method": "GET"
+            }
+        },
+        "state": {
+            "get": {
+                "url": "/state",
+                "method": "GET"
             }
         }
-    }
+    },
+    "globalStateKeys" : ["started"]
 }

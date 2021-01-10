@@ -40,11 +40,15 @@ export const fetchConfig = async () => {
   const fetcher = new configFetcher(endpoint, mockPath);
   const conf = await fetcher.getIt();
   console.log("this is the initial joal configuration :", conf);
-  try {
-    config.set(conf, { freeze: false });
-    return true;
-  } catch (error) {
-    console.error(`Error during setting react global configuration ${error}`);
-    return false;
+  if (conf) {
+    try {
+      config.set(conf, { freeze: false });
+      return true;
+    } catch (error) {
+      console.error(`Error during setting react global configuration ${error}`);
+      return false;
+    }
   }
+  return false
+
 };
