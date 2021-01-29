@@ -1,6 +1,8 @@
+import { Method } from "axios";
+
 interface ApiCall {
   url: string;
-  method: string;
+  method: Method;
 }
 
 interface Seed {

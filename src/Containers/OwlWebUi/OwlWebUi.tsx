@@ -1,6 +1,8 @@
 import TorrentTable from "../../components/TorrentTable/TorrentTable";
 import { useEffect } from "react";
-const OwlWebUi = (props: any) => {
+import Props from "./props";
+
+const OwlWebUi = (props: Props) => {
   const { getInitialState } = props;
 
   useEffect(() => {
