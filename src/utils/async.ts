@@ -1,8 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-interface ServerResponse<T> {
-  data: T;
-}
-
 export interface Fetchable<T> {
   fetchIt(): Promise<AxiosResponse<T>>;
 }

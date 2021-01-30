@@ -25,4 +25,8 @@ export const fetchConfig = async () => {
   return false;
 };
 
-export default config.get() as ConfigObject;
+const getConfig = (): ConfigObject => {
+  return config.get();
+};
+
+export default getConfig;

@@ -4,12 +4,12 @@ import config from "../configuration";
 export const delete_torrent = async (params: {
   [infohash: string]: string;
 }) => {
-  const apicall = config.api.torrents.delete;
+  const apicall = config().api.torrents.delete;
   return await HTTPFactory.request({ ...apicall, params });
 };
 
 export const add_torrent = (file: Blob) => {
-  const apicall = config.api.torrents.add;
+  const apicall = config().api.torrents.add;
   const data = new FormData();
   data.append("torrent", file);
   return HTTPFactory.request({

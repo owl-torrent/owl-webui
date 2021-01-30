@@ -1,4 +1,4 @@
-interface Client {
+export interface Client {
   name: string;
   version: string;
 }
@@ -9,7 +9,7 @@ interface RuntimeConfig {
   client: string;
 }
 
-interface Config {
+export interface JoalConfig {
   needRestartToTakeEffect: boolean;
   runtimeConfig: RuntimeConfig;
 }
@@ -33,7 +33,7 @@ interface Tracker {
   announceHistory: AnnounceHistory[];
 }
 
-interface Torrent {
+export interface Torrent {
   infohash: string;
   name: string;
   file: string;
@@ -50,15 +50,15 @@ interface TorrentBandWidth {
   percentOfBandwidth: number;
 }
 
-interface Bandwidth {
+export interface Bandwidth {
   currentBandwidth: number;
   torrents: { [hashKey: string]: TorrentBandWidth };
 }
 
 export interface JoalState {
-  started: string;
+  globals: { [hashKey: string]: any };
   client: Client;
-  config: Config;
+  config: JoalConfig;
   torrents: { [hashKey: string]: Torrent };
   bandwidth: Bandwidth;
 }
