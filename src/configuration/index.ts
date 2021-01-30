@@ -1,6 +1,6 @@
 import config from "react-global-configuration";
 import { get_env } from "./env";
-import { ConfigObject } from "../api/type";
+import { ConfigObject } from "../api/Types/uiConfig";
 import { Fetcher } from "../utils/async";
 
 export const fetchConfig = async () => {

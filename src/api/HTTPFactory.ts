@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
-
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { ApiCall } from "./Types/uiConfig";
 class HTTPFactory {
   private static _instance: HTTPFactory;
   public client: AxiosInstance;
@@ -9,8 +9,11 @@ class HTTPFactory {
     });
   }
 
+  public async request<T>(options: ApiCall): Promise<AxiosResponse<T>> {
+    return await this.client.request<T>(options);
+  }
+
   public static get Instance() {
-    // Do you need arguments? Make it a regular static method instead.
     return this._instance || (this._instance = new this());
   }
 }
