@@ -1,13 +1,15 @@
 import HTTPFactory from "./HTTPFactory";
-import config from "react-global-configuration";
-import { ConfigurationApi } from "./Types/uiConfig";
-
-const api = (): ConfigurationApi => config.get("api").configuration;
+import config from "../configuration";
 
 export const get_configuration = async () => {
-  return await HTTPFactory.request(api().get);
+  const apicall = config.api.configuration.get;
+  return await HTTPFactory.request(apicall);
 };
 
 export const change_configuration = async (data: Object) => {
-  return await HTTPFactory.request({ ...api().change, data });
+  const apicall = config.api.configuration.change;
+  return await HTTPFactory.request({
+    ...apicall,
+    data,
+  });
 };

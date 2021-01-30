@@ -1,17 +1,14 @@
 import HTTPFactory from "./HTTPFactory";
-import config from "react-global-configuration";
-import { SeedApi } from "./Types/uiConfig";
-
-const api = (): SeedApi => config.get("api").seed;
+import config from "../configuration";
 
 export const start_seed = async () => {
-  const options = api().start;
+  const apicall = config.api.seed.start;
   //TODO : Handle error
-  await HTTPFactory.request(options);
+  await HTTPFactory.request(apicall);
 };
 
 export const stop_seed = async () => {
-  const options = api().stop;
+  const apicall = config.api.seed.stop;
   //TODO : Handle error
-  await HTTPFactory.request(options);
+  await HTTPFactory.request(apicall);
 };

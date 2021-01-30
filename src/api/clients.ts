@@ -1,8 +1,7 @@
 import HTTPFactory from "./HTTPFactory";
-import config from "react-global-configuration";
-import { ClientsApi } from "./Types/uiConfig";
-const api = (): ClientsApi => config.get("api").clients;
+import config from "../configuration";
 
 export const get_all = async () => {
-  return await HTTPFactory.request(api().get);
+  const apicall = config.api.clients.get;
+  return await HTTPFactory.request(apicall);
 };
