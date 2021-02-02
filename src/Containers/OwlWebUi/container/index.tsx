@@ -1,10 +1,9 @@
 import OwlWebUi from "../OwlWebUi";
-import { connect } from "react-redux";
-import { getInitialState } from "../../../store/actions/state";
-import Props from "../props";
+import {useActions} from "../../../Hooks/useActions"
 
-const OwlWebUiContainer = (props: Props) => {
-  return <OwlWebUi {...props} />;
+const OwlWebUiContainer: React.FC = () => {
+  const {getInitialState} = useActions();
+  return <OwlWebUi getInitialState={getInitialState} />;
 };
 
-export default connect(null, { getInitialState })(OwlWebUiContainer);
+export default OwlWebUiContainer;

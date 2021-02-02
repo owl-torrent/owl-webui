@@ -1,25 +1,18 @@
-import { Torrent, JoalState } from "../../api/Types/joalState";
-import { connect } from "react-redux";
-interface TorrentTableProps {
-  torrents: { [hashKey: string]: Torrent };
-}
+import {useTypedSelector} from "../../Hooks/useTypedSelector"
 
-const TorrentTable = (props: TorrentTableProps): JSX.Element => {
+const TorrentTable: React.FC = () => {
+  const torrents = useTypedSelector(state => state.torrents)
   const renderTorrents = () => {
     return (
-      Object.keys(props.torrents).length > 0 &&
-      Object.keys(props.torrents).map((torrent) => (
-        <div key={torrent}>{props.torrents[torrent].name}</div>
+      Object.keys(torrents).length > 0 &&
+      Object.keys(torrents).map((torrent) => (
+        <div key={torrent}>{torrents[torrent].name}</div>
       ))
     );
   };
   return <div>{renderTorrents()}</div>;
 };
 
-const mapStateToProps = (
-  state: JoalState
-): { torrents: { [hashKey: string]: Torrent } } => {
-  return { torrents: state.torrents };
-};
 
-export default connect(mapStateToProps)(TorrentTable);
+
+export default TorrentTable;

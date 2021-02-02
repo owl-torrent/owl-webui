@@ -1,12 +1,8 @@
-import types from "./actionTypes";
-import API from "../../../api";
+import types from "./types/joalState";
+import API from "../../api";
 import { Dispatch } from "redux";
-import { JoalState } from "../../../api/Types/joalState";
+import {InitStateAction} from "./types"
 
-export interface InitStateAction {
-  type: types.INIT_STATE;
-  payload: JoalState;
-}
 
 export const getInitialState = () => async (dispatch: Dispatch) => {
   const { data } = await API.state.get();
