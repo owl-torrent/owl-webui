@@ -1,21 +1,10 @@
-import React from 'react'
+import "@fontsource/roboto"
 import ReactDOM from 'react-dom'
-import App from './App'
-import { Provider } from 'react-redux'
-import configureAppStore from './store/store'
 import reportWebVitals from './reportWebVitals'
-import ApiProvider from './api/contexts/provider'
-
-const store = configureAppStore()
+import Root from './Root'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ApiProvider>
-        <App />
-      </ApiProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Root />,
   document.getElementById('root')
 );
 

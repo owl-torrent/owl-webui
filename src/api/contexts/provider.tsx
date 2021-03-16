@@ -15,7 +15,7 @@ const loadConnectionParams = (): ApiConnectionParamsTypes => {
     pathPrefix: window.location.pathname.split('/')[1] || ''
   }
   const params = localStorage.getItem(LOCAL_STORAGE_KEY)
-  if (params == null) {
+  if (!params) {
     return defaultVal
   }
   
@@ -51,7 +51,6 @@ const buildWsApiUri = (params: ApiConnectionParamsTypes) => {
   return `${wsProto}://${params.host}${includePort ? `:${params.port}` : ''}/${prefixWithoutSlash}/ws`
 }
 
-
 const ApiContext = React.createContext<ApiContextType>(initialState)
 const ApiDispatchContext = React.createContext<Updater<ApiContextType>>(() => {})
 
@@ -59,17 +58,22 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
   const [state, setState] = useImmer<ApiContextType>(initialState)
 
   React.useEffect(() => {
-    if (state.connectionParams.host === '' || state.connectionParams.port === '') {
+    if (state.connectionParams.host === '' || state.connectionParams.port === '' || state.connectionParams.pathPrefix === '') {
       return
     }
 
     const httpApi = newHttpApi(buildHttpApiUri(state.connectionParams))
     const stompApi = newStompApi(buildWsApiUri(state.connectionParams))
 
-    stompApi.rawClient.onConnect = () => {
+    setState(st => {
+      st.http = httpApi
+      st.webSocket = stompApi
+    })
+
+    stompApi.rawClient.onConnect = (f) => {
+      console.log('stomp connected succesfully', f)
       setState(current => {
         current.isConnected = true
-        current.webSocket = stompApi
       })
     }
     stompApi.rawClient.onDisconnect = () => {
@@ -104,10 +108,29 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
 
 export const useApis = () => {
   const context = React.useContext(ApiContext)
+  const setState = React.useContext(ApiDispatchContext)
   if (context === undefined) {
     throw new Error('useApis must be used within an ApiProvider')
   }
-  return context
+  return {
+    apis: context,
+    changeConnectionParams: (host: string, port: string, secure: boolean, pathPrefix: string) => {
+      const params: ApiConnectionParamsTypes = {
+        host: host,
+        port: port,
+        secure: secure,
+        pathPrefix: pathPrefix
+      }
+  
+      persistConnectionParams(params)
+      setState(current => {
+        current.connectionParams = params
+      })
+    },
+    disconnect: async () => {
+      await context.webSocket?.rawClient.deactivate()
+    }
+  }
 }
 
 export const useHttpApi = () => {
@@ -130,27 +153,6 @@ export const useStompApi = () => {
     throw new Error('http api should have been initialized')
   }
   return context.webSocket
-}
-
-export const useUpdateApiParams = () => {
-  const setState = React.useContext(ApiDispatchContext)
-  if (setState === undefined) {
-    throw new Error('useUpdateApiParams must be used within an ApiProvider')
-  }
-  
-  return (host: string, port: string, secure: boolean, pathPrefix: string) => {
-    const params: ApiConnectionParamsTypes = {
-      host: host,
-      port: port,
-      secure: secure,
-      pathPrefix: pathPrefix
-    }
-
-    persistConnectionParams(params)
-    setState(current => {
-      current.connectionParams = params
-    })
-  }
 }
 
 export default ApiProvider
