@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {GlobalState} from '../../api/types'
+import {GlobalState} from '../../modules/api/types'
 
 const initialState: GlobalState = { started: false }
 

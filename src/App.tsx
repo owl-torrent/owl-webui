@@ -1,29 +1,23 @@
-import Button from '@material-ui/core/Button'
-import Container from '@material-ui/core/Container'
 import React from 'react'
-import { useApis } from './api/contexts/provider'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
+import StompRequiredRoute from './modules/api/auth/StompRequiredRoute'
 import ConnectionPage from './pages/connection.page'
+import NotFound from './pages/not-found'
+import Dashboard from './pages/dashboard.page'
 
 const App:React.FC = () => {
-  const {apis: { isConnected }, disconnect} = useApis()
 
   return (
-    <div>
-      <header>
-        header
-      </header>
-      <main>
-        <Container maxWidth="sm">
-          {isConnected
-            ? <div><span>connected&nbsp;</span><Button onClick={disconnect} variant="contained">Disconnect</Button></div>
-            : <ConnectionPage />
-          }
-        </Container>
-      </main>
-      <footer>
-
-      </footer>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/"><Redirect to="/dashboard" /></Route>
+        <StompRequiredRoute exact path="/dashboard"><Dashboard /></StompRequiredRoute>
+        <Route exact path="/404" component={NotFound} />
+        <Route exact path="/connect-api" component={ConnectionPage} />
+        {/* For any other non-mapped route, lets sho the 404 page. (don't redirect user, we want the url to stay the same)*/}
+        <Route><Redirect to="/404" /></Route>
+      </Switch>
+    </Router>
   )
 }
 

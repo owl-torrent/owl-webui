@@ -2,14 +2,17 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import React from 'react'
-import { useApis } from '../api/contexts/provider'
+import { Redirect } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import { useApis } from '../modules/api/contexts/provider'
 
 interface Props {
   
 }
 
 const ConnectionPage: React.FC<Props> = () => {
-  const {apis: {connectionParams}, changeConnectionParams} = useApis()
+  const location = useLocation()
+  const {apis: {connectionParams, isConnected}, changeConnectionParams} = useApis()
   const [port, setPort] = React.useState<string>(connectionParams.port)
   const [prefix, setPrefix] = React.useState<string>(connectionParams.pathPrefix)
 
@@ -22,6 +25,14 @@ const ConnectionPage: React.FC<Props> = () => {
 
   const handleChangePort = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setPort(e.target.value)
   const handleChangePrefix = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setPrefix(e.target.value)
+
+  let currentLocationState: { [key: string]: any } = (location.state && (location.state as any).from)
+    ? (location.state as any)
+    : { from: { pathname: '/' } } // get previous location or fallback to /
+
+  if (isConnected) {
+    return (<Redirect to={currentLocationState?.from as string} />)
+  }
 
   return (
     <React.Fragment>
