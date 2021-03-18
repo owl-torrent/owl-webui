@@ -1,8 +1,7 @@
 import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import LightModeOnIcon from '@material-ui/icons/Brightness2Outlined'
-import DarkModeOnIcon from '@material-ui/icons/Brightness2'
+import {Brightness2Outlined as LightModeOnIcon, Brightness2 as DarkModeOnIcon} from '@material-ui/icons'
 import { useThemeAlterator } from './theme-provider'
+import { IconButton, Tooltip } from '@material-ui/core'
 
 
 const ThemeAlterator: React.FC = () => {
@@ -12,14 +11,14 @@ const ThemeAlterator: React.FC = () => {
   }
 
   return (
-    <div>
+    <Tooltip title="Toggle theme" arrow>
       <IconButton aria-label="Switch theme type" onClick={toggleThemeMode}>
         {themeOpts.palette?.mode === 'dark'
           ? <DarkModeOnIcon htmlColor="#fff" />
           : <LightModeOnIcon htmlColor="#fff" />
         }
       </IconButton>
-    </div>
+    </Tooltip>
   )
 }
 

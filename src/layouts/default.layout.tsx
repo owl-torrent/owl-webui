@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import { useHistory, useRouteMatch } from 'react-router'
 import JoalAppBar from '../components/appbar'
+import StompAuthButton from '../modules/api/auth/stomp-auth-button'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +53,7 @@ const Layout: React.FC<Props> = (props) => {
   const appBarActionsButtons = (
     <>
       <ThemeAlterator />
-      <div>conn button with icon HighlightOff</div>
+      <StompAuthButton />
     </>
   )
 

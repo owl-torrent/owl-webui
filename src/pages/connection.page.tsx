@@ -1,16 +1,24 @@
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
 import React from 'react'
+import { TextField, createStyles, makeStyles, Grid, Container, Theme, Button } from '@material-ui/core'
+import PageLayout from '../layouts/default.layout'
 import { Redirect } from 'react-router'
 import { useLocation } from 'react-router-dom'
 import { useApis } from '../modules/api/contexts/provider'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      marginTop: theme.spacing(3)
+    },
+  }),
+)
 
 interface Props {
   
 }
 
 const ConnectionPage: React.FC<Props> = () => {
+  const classes = useStyles()
   const location = useLocation()
   const {apis: {connectionParams, isConnected}, changeConnectionParams} = useApis()
   const [port, setPort] = React.useState<string>(connectionParams.port)
@@ -35,44 +43,50 @@ const ConnectionPage: React.FC<Props> = () => {
   }
 
   return (
-    <React.Fragment>
-      <form onSubmit={handleFormSubmit}>
-        <Grid container spacing={4}>
+    <PageLayout>
+      <Container maxWidth="lg" className={classes.root}>
+        <Grid container justifyContent="center">
           <Grid item xs={12}>
-            <TextField
-              id="port"
-              label="Port"
-              size="small"
-              required
-              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', title: "Port must be a number" }}
-              InputLabelProps={{ shrink: Boolean(port) }}
-              value={port}
-              onChange={handleChangePort}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="secret-path-prefix"
-              label="Secret path prefix"
-              size="small"
-              required
-              InputLabelProps={{ shrink: Boolean(prefix) }}
-              value={prefix}
-              onChange={handleChangePrefix}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              id="submit"
-              type="submit"
-              variant="outlined"
-            >
-              Go
-            </Button>
+            <form onSubmit={handleFormSubmit}>
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <TextField
+                    id="port"
+                    label="Port"
+                    size="small"
+                    required
+                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', title: "Port must be a number" }}
+                    InputLabelProps={{ shrink: Boolean(port) }}
+                    value={port}
+                    onChange={handleChangePort}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="secret-path-prefix"
+                    label="Secret path prefix"
+                    size="small"
+                    required
+                    InputLabelProps={{ shrink: Boolean(prefix) }}
+                    value={prefix}
+                    onChange={handleChangePrefix}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    id="submit"
+                    type="submit"
+                    variant="outlined"
+                  >
+                    Go
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
           </Grid>
         </Grid>
-      </form>
-    </React.Fragment>
+      </Container>
+    </PageLayout>
   )
 }
 

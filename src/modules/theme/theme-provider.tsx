@@ -1,26 +1,20 @@
 import React, { ReactNode } from 'react'
 import { MuiThemeProvider, createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
-import primary from '@material-ui/core/colors/lightGreen'
-import secondary from '@material-ui/core/colors/amber'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { StyledEngineProvider } from '@material-ui/core'
 import { Updater, useImmer } from 'use-immer'
 
-const LOCAL_STORAGE_KEY = 'theme.theme-options'
+const LOCAL_STORAGE_KEY = 'theme.theme-options.v1'
 
 const loadThemeOptions = (): ThemeOptions => {
   const defaultVal: ThemeOptions = {
     palette: {
       mode: 'light',
       primary: {
-        light: primary[300],
-        main: primary[500],
-        dark: primary[700],
+        main: '#00bfa5'
       },
       secondary: {
-        light: secondary[300],
-        main: secondary[500],
-        dark: secondary[700],
+        main: '#a600bf'
       },
     }
   }
