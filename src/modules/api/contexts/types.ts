@@ -11,6 +11,7 @@ export interface ApiConnectionParamsTypes {
 export interface ApiContextType {
   connectionParams: ApiConnectionParamsTypes,
   isConnected: boolean,
+  isAttemptingToConnect: boolean,
   http?: HttpApi,
   webSocket?: StompApi
 }

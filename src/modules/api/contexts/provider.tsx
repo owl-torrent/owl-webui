@@ -4,6 +4,7 @@ import newHttpApi from './http';
 import newStompApi from './stomp';
 import { ApiConnectionParamsTypes, ApiContextType } from './types';
 import {useImmer, Updater} from 'use-immer';
+import { useSnackbar } from 'notistack';
 
 const LOCAL_STORAGE_KEY = 'api.connections-parameters'
 
@@ -34,6 +35,7 @@ const persistConnectionParams = (params: ApiConnectionParamsTypes) => {
 const initialState: ApiContextType = {
   connectionParams: loadConnectionParams(),
   isConnected: false,
+  isAttemptingToConnect: false,
 }
 
 const buildHttpApiUri = (params: ApiConnectionParamsTypes) => {
@@ -56,6 +58,7 @@ const ApiDispatchContext = React.createContext<Updater<ApiContextType>>(() => {}
 
 const ApiProvider = ({children}: {children: React.ReactElement}) => {
   const [state, setState] = useImmer<ApiContextType>(initialState)
+  const { enqueueSnackbar } = useSnackbar()
 
   React.useEffect(() => {
     if (state.connectionParams.host === '' || state.connectionParams.port === '' || state.connectionParams.pathPrefix === '') {
@@ -70,21 +73,39 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
       st.webSocket = stompApi
     })
 
+    stompApi.rawClient.beforeConnect = () => {
+      setState(current => {
+        current.isAttemptingToConnect = true
+      })
+    }
     stompApi.rawClient.onConnect = (f) => {
+      enqueueSnackbar('Connection established', {variant: 'success', autoHideDuration: 2000})
       console.log('stomp connected succesfully', f)
       setState(current => {
+        current.isAttemptingToConnect = false
         current.isConnected = true
       })
     }
     stompApi.rawClient.onDisconnect = () => {
+      enqueueSnackbar(`Connection with JOAL closed`, {variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
       setState(current => {
+        current.isAttemptingToConnect = false
         current.isConnected = false
       })
     }
     stompApi.rawClient.onStompError = (receipt: IFrame) => {
       console.log('onStompError', receipt.body)
+      setState(current => {
+        current.isAttemptingToConnect = false
+        current.isConnected = false
+      })
     }
     stompApi.rawClient.onWebSocketError = (e: Event) => {
+      enqueueSnackbar(`Websocket connection error, auto-rety in ${stompApi.rawClient.reconnectDelay / 1000}s`, {variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
+      setState(current => {
+        current.isAttemptingToConnect = false
+        current.isConnected = false
+      })
       console.log('onWebSocketError', e)
     }
     
@@ -95,7 +116,7 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
       stompApi.rawClient.onDisconnect = () => {}
       stompApi.rawClient.deactivate()
     }
-  }, [setState, state.connectionParams, state.connectionParams.host, state.connectionParams.port, state.connectionParams.secure, state.connectionParams.pathPrefix])
+  }, [setState, enqueueSnackbar, state.connectionParams, state.connectionParams.host, state.connectionParams.port, state.connectionParams.secure, state.connectionParams.pathPrefix])
 
   return (
     <ApiContext.Provider value={state}>

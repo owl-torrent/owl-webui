@@ -1,5 +1,6 @@
 import React from 'react'
-import { TextField, createStyles, makeStyles, Grid, Container, Theme, Button } from '@material-ui/core'
+import { TextField, createStyles, makeStyles, Grid, Container, Theme, Typography, Hidden } from '@material-ui/core'
+import { LoadingButton } from '@material-ui/lab'
 import PageLayout from '../layouts/default.layout'
 import { Redirect } from 'react-router'
 import { useLocation } from 'react-router-dom'
@@ -9,6 +10,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginTop: theme.spacing(3)
+    },
+    icon: {
+      fontSize: 50,
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 100,
+      },
+    },
+    connectionButton: {
+      paddingTop: theme.spacing(2),
     },
   }),
 )
@@ -23,6 +33,8 @@ const ConnectionPage: React.FC<Props> = () => {
   const {apis: {connectionParams, isConnected}, changeConnectionParams} = useApis()
   const [port, setPort] = React.useState<string>(connectionParams.port)
   const [prefix, setPrefix] = React.useState<string>(connectionParams.pathPrefix)
+
+  React.useEffect(() => {document.title = "JOAL - Connexion"})
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation()
@@ -45,11 +57,19 @@ const ConnectionPage: React.FC<Props> = () => {
   return (
     <PageLayout>
       <Container maxWidth="lg" className={classes.root}>
-        <Grid container justifyContent="center">
-          <Grid item xs={12}>
+        <Grid container spacing={10} alignItems="center" direction="column">
+          <Grid item>
+            <Hidden smUp><Typography variant="h5">Server connection</Typography></Hidden>
+            <Hidden smDown><Typography variant="h2">Server connection</Typography></Hidden>
+            <Typography variant="subtitle1">
+              Fill the fields and save the parameters to connect
+            </Typography>
+          </Grid>
+
+          <Grid item>
             <form onSubmit={handleFormSubmit}>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
+              <Grid container spacing={2} justifyContent="center" direction="row">
+                <Grid item>
                   <TextField
                     id="port"
                     label="Port"
@@ -61,7 +81,7 @@ const ConnectionPage: React.FC<Props> = () => {
                     onChange={handleChangePort}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item>
                   <TextField
                     id="secret-path-prefix"
                     label="Secret path prefix"
@@ -72,14 +92,17 @@ const ConnectionPage: React.FC<Props> = () => {
                     onChange={handleChangePrefix}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
+              </Grid>
+              <Grid container justifyContent="center" direction="row" className={classes.connectionButton}>
+                <Grid item>
+                  <LoadingButton
                     id="submit"
                     type="submit"
-                    variant="outlined"
+                    variant="contained"
+                    color="secondary"
                   >
-                    Go
-                  </Button>
+                    Save parameters
+                  </LoadingButton>
                 </Grid>
               </Grid>
             </form>
