@@ -1,8 +1,11 @@
 import {AxiosInstance} from 'axios'
-import {RuntimeConfig} from '../../types'
+import {JoalState, RuntimeConfig} from '../../types'
 
 export interface HttpApi {
   rawAxios: AxiosInstance,
+  state: {
+    get: () => Promise<JoalState>
+  },
   config: {
     get: () => Promise<RuntimeConfig>,
     update: (newConfig: RuntimeConfig) => Promise<RuntimeConfig>,

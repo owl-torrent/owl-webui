@@ -8,6 +8,7 @@ import ApiProvider from './modules/api/contexts/provider'
 import ThemeProvider from './modules/theme/theme-provider'
 import { IconButton } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
+import ApiStompListener from './features/api/ApiStompListener'
 
 const store = configureAppStore()
 
@@ -35,9 +36,12 @@ const Root: React.FC = () => {
           )}
         >
           <ApiProvider>
-            <ThemeProvider>
-              <App />
-            </ThemeProvider>
+            <>
+              <ApiStompListener />
+              <ThemeProvider>
+                <App />
+              </ThemeProvider>
+            </>
           </ApiProvider>
         </SnackbarProvider>
       </Provider>

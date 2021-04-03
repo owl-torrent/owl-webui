@@ -60,7 +60,7 @@ export interface Bandwidth {
 }
 
 export interface JoalState {
-  globals: GlobalState
+  global: GlobalState
   client: Client
   config: JoalConfig
   torrents: { [hashKey: string]: Torrent }

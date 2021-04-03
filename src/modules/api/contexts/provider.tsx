@@ -171,7 +171,7 @@ export const useStompApi = () => {
     throw new Error('useStompApi must be used within an ApiProvider')
   }
   if (!context.webSocket) {
-    throw new Error('http api should have been initialized')
+    throw new Error('ws api should have been initialized')
   }
   return context.webSocket
 }
