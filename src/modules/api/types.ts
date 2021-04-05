@@ -55,9 +55,11 @@ export interface TorrentBandWidth {
   percentOfBandwidth: number
 }
 
+export type TorrentBandwidthMapState = { [hashKey: string]: Torrent }
+
 export interface Bandwidth {
   currentBandwidth: number
-  torrents: { [hashKey: string]: TorrentBandWidth }
+  torrents: TorrentBandwidthMapState
 }
 
 export type TorrentMapState = { [hashKey: string]: Torrent }

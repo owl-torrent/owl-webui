@@ -26,7 +26,7 @@ const slice = createSlice({
     ).addCase(
       bandwidthDistributionChanged,
       (state, action) => {
-        state.torrents = action.payload.torrents
+        state.torrents = action.payload
       }
     )
   }
