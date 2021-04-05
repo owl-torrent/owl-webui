@@ -4,7 +4,7 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 import PageLayout from '../layouts/default.layout'
 import Container from '@material-ui/core/Container'
 import { useSelector } from 'react-redux'
-import { globalSelectors } from '../features/api/global.slice'
+import { globalSelectors } from '../features/api/slice.global'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,7 +31,7 @@ const Dashboard: React.FC<Props> = () => {
             dashboard page
           </Grid>
           <Grid item xs={12}>
-            connected : {Boolean(isConnected).toString()}
+            seed started : {Boolean(isConnected).toString()}
           </Grid>
         </Grid>
       </Container>

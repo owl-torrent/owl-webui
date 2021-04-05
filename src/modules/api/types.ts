@@ -1,10 +1,11 @@
-export interface GlobalState {
-  started: boolean
-}
-
 export interface Client {
   name: string
   version: string
+}
+
+export interface GlobalState {
+  started: boolean
+  client?: Client
 }
 
 export interface RuntimeConfig {
@@ -59,10 +60,11 @@ export interface Bandwidth {
   torrents: { [hashKey: string]: TorrentBandWidth }
 }
 
+export type TorrentMapState = { [hashKey: string]: Torrent }
+
 export interface JoalState {
   global: GlobalState
-  client: Client
   config: JoalConfig
-  torrents: { [hashKey: string]: Torrent }
+  torrents: TorrentMapState
   bandwidth: Bandwidth
 }

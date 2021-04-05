@@ -1,10 +1,7 @@
-import { StompSubscription } from '@stomp/stompjs'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useApis } from '../../modules/api/contexts/provider'
-import {globalActions} from './global.slice'
-import { SeedStartedPayload, SeedStoppedPayload } from './types'
 import { replaceWholeState } from './utils'
 
 
@@ -34,26 +31,19 @@ const ApiStompListener: React.FC<{}> = () => {
     }
 
     f()
-  }, [isConnected])
+  }, [isConnected, dispatch, enqueueSnackbar, http])
 
   React.useEffect(() => {
     if (!isConnected || !stomp) {
       return
     }
-    const subscriptions: Array<StompSubscription> = []
-    subscriptions.push(stomp.rawClient.subscribe('/seed/started', (message) => {
-      const payload: SeedStartedPayload = JSON.parse(message.body)
-      dispatch(globalActions.seedStarted(payload))
-    }))
-    subscriptions.push(stomp.rawClient.subscribe('/seed/stopped', (message) => {
-      const payload: SeedStoppedPayload = JSON.parse(message.body)
-      dispatch(globalActions.seedStopped(payload))
-    }))
+    const subscription = stomp.rawClient.subscribe('/joal-core-events', (message) => {
+      const joalCoreStompMessage: { type: string, payload: any} = JSON.parse(message.body)
+      dispatch(joalCoreStompMessage)
+    })
 
     return () => {
-      subscriptions.forEach(
-        sub => {sub.unsubscribe()}
-      )
+      subscription.unsubscribe()
     }
   }, [stomp, isConnected, dispatch])
 
