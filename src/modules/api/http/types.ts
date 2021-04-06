@@ -3,6 +3,10 @@ import {JoalState, RuntimeConfig} from '../types'
 
 export interface HttpApi {
   rawAxios: AxiosInstance,
+  global: {
+    start: () => Promise<void>
+    stop: () => Promise<void>
+  }
   state: {
     get: () => Promise<JoalState>
   },
