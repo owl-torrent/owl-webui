@@ -151,6 +151,8 @@ const NotFound: React.FC<Props> = () => {
   const classes = useStyles()
   const history = useHistory()
 
+  React.useEffect(() => {document.title = "JOAL - 404 Not found"}, [])
+
   return (
     <Grid container direction="column" alignItems="center" justifyContent="center">
       <Grid item lg={8}>

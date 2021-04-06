@@ -34,7 +34,7 @@ const ConnectionPage: React.FC<Props> = () => {
   const [port, setPort] = React.useState<string>(connectionParams.port)
   const [prefix, setPrefix] = React.useState<string>(connectionParams.pathPrefix)
 
-  React.useEffect(() => {document.title = "JOAL - Connexion"})
+  React.useEffect(() => {document.title = "JOAL - Connexion"}, [])
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation()

@@ -23,6 +23,8 @@ const Dashboard: React.FC<Props> = () => {
   const classes = useStyles()
   const isConnected = useSelector(globalSelectors.selectIsSeedStarted)
 
+  React.useEffect(() => {document.title = "JOAL - Dashboard"}, [])
+
   return (
     <PageLayout>
       <Container maxWidth="lg" className={classes.root}>
