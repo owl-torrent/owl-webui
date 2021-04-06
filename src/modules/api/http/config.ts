@@ -1,5 +1,5 @@
 import {AxiosInstance, AxiosResponse} from 'axios'
-import { RuntimeConfig } from "../../types"
+import { RuntimeConfig } from "../types"
 import { normalizeError } from './utils'
 
 export const config = (axiosInstance: AxiosInstance) => ({

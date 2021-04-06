@@ -1,11 +1,11 @@
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { useApis } from '../../modules/api/contexts/provider'
+import { useApis } from '../../modules/api'
 import { replaceWholeState } from './utils'
 
 
-const ApiStompListener: React.FC<{}> = () => {
+const StompListenAndDispatch: React.FC<{}> = () => {
   const { apis: {isConnected, http, webSocket: stomp}} = useApis()
   const {enqueueSnackbar} = useSnackbar()
   const dispatch = useDispatch()
@@ -13,7 +13,6 @@ const ApiStompListener: React.FC<{}> = () => {
   React.useEffect(() => {
     const f = async () => {
       if (!isConnected) {
-        console.log('ApiStompListener.tsx => reset state?')
         return
       }
       if (!http) {
@@ -26,7 +25,7 @@ const ApiStompListener: React.FC<{}> = () => {
         dispatch(replaceWholeState(state))
       } catch (e) {
         console.log(e)
-        enqueueSnackbar(`Impossible de charger l'état initial: ${e.message}`, {variant: 'error'})
+        enqueueSnackbar(`failed to load initial state: ${e.message}`, {variant: 'error'})
       }
     }
 
@@ -50,4 +49,4 @@ const ApiStompListener: React.FC<{}> = () => {
   return (<></>)
 }
 
-export default ApiStompListener
+export default StompListenAndDispatch

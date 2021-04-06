@@ -1,5 +1,5 @@
 import {AxiosInstance} from 'axios'
-import { JoalState } from "../../types"
+import { JoalState } from "../types"
 import { normalizeError } from './utils'
 
 export const state = (axiosInstance: AxiosInstance) => ({

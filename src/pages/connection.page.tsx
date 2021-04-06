@@ -4,7 +4,7 @@ import { LoadingButton } from '@material-ui/lab'
 import PageLayout from '../layouts/default.layout'
 import { Redirect } from 'react-router'
 import { useLocation } from 'react-router-dom'
-import { useApis } from '../modules/api/contexts/provider'
+import { useApis } from '../modules/api'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

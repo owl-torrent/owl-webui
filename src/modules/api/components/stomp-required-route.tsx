@@ -4,7 +4,7 @@ import {
   Redirect,
   RouteProps,
 } from 'react-router-dom'
-import { useApis } from '../contexts/provider'
+import { useApis } from '../provider'
 
 type Props = Partial<RouteProps> & {
     children: JSX.Element

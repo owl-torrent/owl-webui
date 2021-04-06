@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApis } from '../contexts/provider'
+import { useApis } from '../provider'
 import { createStyles, IconButton, makeStyles, Theme, Tooltip } from '@material-ui/core'
 import { Wifi as ConnectedIcon, WifiOff as DisconnectedIcon } from '@material-ui/icons'
 

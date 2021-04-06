@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { Bandwidth } from '../../modules/api/types'
+import { Bandwidth } from '../../modules/api'
 import { RootState } from '../../store/store'
 import { bandwidthDistributionChanged, bandwidthRangeChanged } from './actions.stomp'
 import { replaceWholeState } from './utils'

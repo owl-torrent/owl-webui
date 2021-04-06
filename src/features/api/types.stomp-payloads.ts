@@ -1,4 +1,4 @@
-import { Bandwidth, GlobalState, JoalConfig, Torrent, TorrentBandwidthMapState } from "../../modules/api/types";
+import { Bandwidth, GlobalState, JoalConfig, Torrent, TorrentBandwidthMapState } from "../../modules/api";
 
 export type SeedStartedPayload = Required<GlobalState>
 export type SeedStoppedPayload = {}

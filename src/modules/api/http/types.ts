@@ -1,5 +1,5 @@
 import {AxiosInstance} from 'axios'
-import {JoalState, RuntimeConfig} from '../../types'
+import {JoalState, RuntimeConfig} from '../types'
 
 export interface HttpApi {
   rawAxios: AxiosInstance,

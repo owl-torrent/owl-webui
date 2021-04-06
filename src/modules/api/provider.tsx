@@ -2,13 +2,29 @@ import { IFrame } from '@stomp/stompjs';
 import React from 'react'
 import newHttpApi from './http';
 import newStompApi from './stomp';
-import { ApiConnectionParamsTypes, ApiContextType } from './types';
-import {useImmer, Updater} from 'use-immer';
+import { HttpApi } from './http/types'
+import { StompApi } from './stomp/types'
+import { useImmer, Updater } from 'use-immer';
 import { useSnackbar } from 'notistack';
+
+export interface ApiConnectionParams {
+  host: string,
+  port: string,
+  secure: boolean,
+  pathPrefix: string
+}
+
+export interface ApiContextType {
+  connectionParams: ApiConnectionParams,
+  isConnected: boolean,
+  isAttemptingToConnect: boolean,
+  http?: HttpApi,
+  webSocket?: StompApi
+}
 
 const LOCAL_STORAGE_KEY = 'api.connections-parameters'
 
-const loadConnectionParams = (): ApiConnectionParamsTypes => {
+const loadConnectionParams = (): ApiConnectionParams => {
   const defaultVal = {
     host: window.location.hostname,
     port: window.location.port || (window.location.protocol === 'https' ? '443' : '80'),
@@ -19,7 +35,7 @@ const loadConnectionParams = (): ApiConnectionParamsTypes => {
   if (!params) {
     return defaultVal
   }
-  
+
   try {
     return JSON.parse(params)
   } catch (error) {
@@ -28,7 +44,7 @@ const loadConnectionParams = (): ApiConnectionParamsTypes => {
     return defaultVal
   }
 }
-const persistConnectionParams = (params: ApiConnectionParamsTypes) => {
+const persistConnectionParams = (params: ApiConnectionParams) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(params))
 }
 
@@ -38,25 +54,25 @@ const initialState: ApiContextType = {
   isAttemptingToConnect: false,
 }
 
-const buildHttpApiUri = (params: ApiConnectionParamsTypes) => {
-  const httpProto = params.secure? 'https' : 'http'
-  const includePort =  (params.port && params.port !=='') && ((params.secure && params.port !== '443' ) || (!params.secure && params.port !== '80'))
+const buildHttpApiUri = (params: ApiConnectionParams) => {
+  const httpProto = params.secure ? 'https' : 'http'
+  const includePort = (params.port && params.port !== '') && ((params.secure && params.port !== '443') || (!params.secure && params.port !== '80'))
   const prefixWithoutSlash = params.pathPrefix.startsWith('/') ? params.pathPrefix.substring(1) : params.pathPrefix
 
   return `${httpProto}://${params.host}${includePort ? `:${params.port}` : ''}/${prefixWithoutSlash}/api`
 }
-const buildWsApiUri = (params: ApiConnectionParamsTypes) => {
-  const wsProto = params.secure? 'wss' : 'ws'
-  const includePort =  (params.port && params.port !=='') && ((params.secure && params.port !== '443' ) || (!params.secure && params.port !== '80'))
+const buildWsApiUri = (params: ApiConnectionParams) => {
+  const wsProto = params.secure ? 'wss' : 'ws'
+  const includePort = (params.port && params.port !== '') && ((params.secure && params.port !== '443') || (!params.secure && params.port !== '80'))
   const prefixWithoutSlash = params.pathPrefix.startsWith('/') ? params.pathPrefix.substring(1) : params.pathPrefix
 
   return `${wsProto}://${params.host}${includePort ? `:${params.port}` : ''}/${prefixWithoutSlash}/ws`
 }
 
 const ApiContext = React.createContext<ApiContextType>(initialState)
-const ApiDispatchContext = React.createContext<Updater<ApiContextType>>(() => {})
+const ApiDispatchContext = React.createContext<Updater<ApiContextType>>(() => { })
 
-const ApiProvider = ({children}: {children: React.ReactElement}) => {
+const ApiProvider = ({ children }: { children: React.ReactElement }) => {
   const [state, setState] = useImmer<ApiContextType>(initialState)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -79,7 +95,7 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
       })
     }
     stompApi.rawClient.onConnect = (f) => {
-      enqueueSnackbar('Connection established', {variant: 'success', autoHideDuration: 2000})
+      enqueueSnackbar('Connection established', { variant: 'success', autoHideDuration: 2000 })
       console.log('stomp connected succesfully', f)
       setState(current => {
         current.isAttemptingToConnect = false
@@ -87,7 +103,7 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
       })
     }
     stompApi.rawClient.onDisconnect = () => {
-      enqueueSnackbar(`Connection with JOAL closed`, {variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
+      enqueueSnackbar(`Connection with JOAL closed`, { variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
       setState(current => {
         current.isAttemptingToConnect = false
         current.isConnected = false
@@ -101,19 +117,19 @@ const ApiProvider = ({children}: {children: React.ReactElement}) => {
       })
     }
     stompApi.rawClient.onWebSocketError = (e: Event) => {
-      enqueueSnackbar(`Websocket connection error, auto-rety in ${stompApi.rawClient.reconnectDelay / 1000}s`, {variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
+      enqueueSnackbar(`Websocket connection error, auto-rety in ${stompApi.rawClient.reconnectDelay / 1000}s`, { variant: 'error', autoHideDuration: stompApi.rawClient.reconnectDelay * 0.8 })
       setState(current => {
         current.isAttemptingToConnect = false
         current.isConnected = false
       })
       console.log('onWebSocketError', e)
     }
-    
+
     stompApi.rawClient.activate()
 
     return () => {
-      stompApi.rawClient.onConnect = () => {}
-      stompApi.rawClient.onDisconnect = () => {}
+      stompApi.rawClient.onConnect = () => { }
+      stompApi.rawClient.onDisconnect = () => { }
       stompApi.rawClient.deactivate()
     }
   }, [setState, enqueueSnackbar, state.connectionParams, state.connectionParams.host, state.connectionParams.port, state.connectionParams.secure, state.connectionParams.pathPrefix])
@@ -136,13 +152,13 @@ export const useApis = () => {
   return {
     apis: context,
     changeConnectionParams: (host: string, port: string, secure: boolean, pathPrefix: string) => {
-      const params: ApiConnectionParamsTypes = {
+      const params: ApiConnectionParams = {
         host: host,
         port: port,
         secure: secure,
         pathPrefix: pathPrefix
       }
-  
+
       persistConnectionParams(params)
       setState(current => {
         current.connectionParams = params

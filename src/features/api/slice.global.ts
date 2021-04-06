@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { GlobalState } from '../../modules/api/types'
+import { GlobalState } from '../../modules/api'
 import { RootState } from '../../store/store'
 import { seedStarted, seedStopped } from './actions.stomp'
 

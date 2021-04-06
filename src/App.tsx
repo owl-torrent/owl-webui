@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
-import StompRequiredRoute from './modules/api/auth/StompRequiredRoute'
+import {StompRequiredRoute} from './modules/api'
 import ConnectionPage from './pages/connection.page'
 import NotFound from './pages/not-found'
 import Dashboard from './pages/dashboard.page'

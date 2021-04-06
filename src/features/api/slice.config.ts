@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { JoalConfig } from '../../modules/api/types'
+import { JoalConfig } from '../../modules/api'
 import { RootState } from '../../store/store'
 import { configChanged } from './actions.stomp'
 
