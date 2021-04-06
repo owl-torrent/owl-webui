@@ -1,9 +1,8 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { JoalConfig } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { configChanged } from './actions.stomp'
+import { replaceWholeState, configChanged } from './actions.stomp'
 
-import { replaceWholeState } from './utils'
 
 let initialState: JoalConfig = {
   needRestartToTakeEffect: false,

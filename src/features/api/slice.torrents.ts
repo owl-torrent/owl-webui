@@ -1,8 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { TorrentMapState } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { torrentAdded, torrentChanged, torrentRemoved } from './actions.stomp'
-import { replaceWholeState } from './utils'
+import { replaceWholeState, torrentAdded, torrentChanged, torrentRemoved } from './actions.stomp'
 
 let initialState: TorrentMapState = {
 }

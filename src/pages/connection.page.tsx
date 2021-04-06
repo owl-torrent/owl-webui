@@ -62,7 +62,7 @@ const ConnectionPage: React.FC<Props> = () => {
             <Hidden smUp><Typography variant="h5">Server connection</Typography></Hidden>
             <Hidden smDown><Typography variant="h2">Server connection</Typography></Hidden>
             <Typography variant="subtitle1">
-              Fill the fields and save the parameters to connect
+              Fill the fields and save parameters to connect
             </Typography>
           </Grid>
 

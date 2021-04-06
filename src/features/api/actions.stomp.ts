@@ -1,4 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
+import { JoalState } from "../../modules/api";
 import { BandiwdthSpeedDistributionChangedPayload, BandiwdthSpeedRangeChangedPayload, ConfigHasChangedPayload, SeedStartedPayload, TorrentAddedPayload, TorrentChangedPayload, TorrentRemovedPayload } from "./types.stomp-payloads";
 
 
@@ -13,3 +14,5 @@ export const torrentRemoved = createAction<TorrentRemovedPayload>('@STOMP_API/TO
 
 export const bandwidthRangeChanged = createAction<BandiwdthSpeedRangeChangedPayload>('@STOMP_API/BANDWIDTH/RANGE_CHANGED')
 export const bandwidthDistributionChanged = createAction<BandiwdthSpeedDistributionChangedPayload>('@STOMP_API/BANDWIDTH/DISTRIBUTION_CHANGED')
+
+export const replaceWholeState = createAction<JoalState>('replaceWholeState')

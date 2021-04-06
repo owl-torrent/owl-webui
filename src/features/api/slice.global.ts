@@ -1,9 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { GlobalState } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { seedStarted, seedStopped } from './actions.stomp'
-
-import { replaceWholeState } from './utils'
+import { replaceWholeState, seedStarted, seedStopped } from './actions.stomp'
 
 const initialState: GlobalState = { started: false, client: undefined }
 

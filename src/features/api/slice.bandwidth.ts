@@ -1,8 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { Bandwidth } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { bandwidthDistributionChanged, bandwidthRangeChanged } from './actions.stomp'
-import { replaceWholeState } from './utils'
+import { replaceWholeState, bandwidthDistributionChanged, bandwidthRangeChanged } from './actions.stomp'
 
 let initialState: Bandwidth = {
   currentBandwidth: 0,
@@ -34,7 +33,7 @@ const slice = createSlice({
 
 const selectBandwidth = createSelector<RootState, Bandwidth, Bandwidth>(state => state.api.bandwidth, s => s)
 
-export const torrentsSelectors = {
+export const bandwidthSelectors = {
   selectBandwidth
 }
 export default slice
