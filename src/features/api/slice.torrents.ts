@@ -14,7 +14,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.torrents
+      (state, action) => state = action.payload.torrents || initialState
     ).addCase(
       torrentAdded,
       (state, action) => {

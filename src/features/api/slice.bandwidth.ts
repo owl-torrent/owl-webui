@@ -16,7 +16,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.bandwidth
+      (state, action) => state = action.payload.bandwidth || initialState
     ).addCase(
       bandwidthRangeChanged,
       (state, action) => {

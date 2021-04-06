@@ -1,8 +1,9 @@
+import { StompSubscription } from '@stomp/stompjs'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useApis } from '../../modules/api'
-import { replaceWholeState } from './utils'
+import { replaceWholeState } from './actions.stomp'
 
 
 const StompListenAndDispatch: React.FC<{}> = () => {
@@ -11,12 +12,17 @@ const StompListenAndDispatch: React.FC<{}> = () => {
   const dispatch = useDispatch()
 
   React.useEffect(() => {
+    let subscription: StompSubscription | undefined = undefined
     const f = async () => {
       if (!isConnected) {
         return
       }
       if (!http) {
         console.error('http client was not available')
+        return
+      }
+      if (!stomp) {
+        console.error('stomp client was not available')
         return
       }
 
@@ -27,24 +33,19 @@ const StompListenAndDispatch: React.FC<{}> = () => {
         console.log(e)
         enqueueSnackbar(`failed to load initial state: ${e.message}`, {variant: 'error'})
       }
+
+      subscription = stomp.rawClient.subscribe('/joal-core-events', (message) => {
+        const joalCoreStompMessage: { type: string, payload: any} = JSON.parse(message.body)
+        dispatch(joalCoreStompMessage)
+      })
     }
 
     f()
-  }, [isConnected, dispatch, enqueueSnackbar, http])
-
-  React.useEffect(() => {
-    if (!isConnected || !stomp) {
-      return
-    }
-    const subscription = stomp.rawClient.subscribe('/joal-core-events', (message) => {
-      const joalCoreStompMessage: { type: string, payload: any} = JSON.parse(message.body)
-      dispatch(joalCoreStompMessage)
-    })
-
+    
     return () => {
-      subscription.unsubscribe()
+      if (subscription) subscription.unsubscribe()
     }
-  }, [stomp, isConnected, dispatch])
+  }, [isConnected, dispatch, enqueueSnackbar, http, stomp])
 
   return (<></>)
 }
