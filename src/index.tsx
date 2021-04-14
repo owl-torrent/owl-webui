@@ -1,4 +1,4 @@
-import "@fontsource/roboto"
+import './index.css'
 import ReactDOM from 'react-dom'
 import reportWebVitals from './reportWebVitals'
 import Root from './Root'
