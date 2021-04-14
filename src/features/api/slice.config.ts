@@ -21,14 +21,16 @@ const slice = createSlice({
   'extraReducers': (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.config || initialState
+      (_, action) => {
+        return action.payload.config ? action.payload.config : initialState
+      }
     ).addCase(
       configChanged,
       (state, action) => {
         if (!state) {
           return
         }
-        state = action.payload
+        return action.payload
       }
     )
   }

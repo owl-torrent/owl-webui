@@ -13,7 +13,9 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.global
+      (_, action) => {
+        return action.payload.global
+      }
     ).addCase(
       seedStarted,
       (state, action) => {

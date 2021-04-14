@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { Bandwidth } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { replaceWholeState, bandwidthDistributionChanged, bandwidthRangeChanged } from './actions.stomp'
+import { replaceWholeState, bandwidthDistributionChanged, bandwidthRangeChanged, seedStopped } from './actions.stomp'
 
 let initialState: Bandwidth = {
   currentBandwidth: 0,
@@ -16,7 +16,14 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.bandwidth || initialState
+      (_, action) => {
+        return action.payload.bandwidth ? action.payload.bandwidth : initialState
+      }
+    ).addCase(
+      seedStopped,
+      () => {
+        return initialState
+      }
     ).addCase(
       bandwidthRangeChanged,
       (state, action) => {

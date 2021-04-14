@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { TorrentMapState } from '../../modules/api'
 import { RootState } from '../../store/store'
-import { replaceWholeState, torrentAdded, torrentChanged, torrentRemoved } from './actions.stomp'
+import { replaceWholeState, seedStopped, torrentAdded, torrentChanged, torrentRemoved } from './actions.stomp'
 
 let initialState: TorrentMapState = {
 }
@@ -14,7 +14,15 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       replaceWholeState,
-      (state, action) => state = action.payload.torrents || initialState
+      (_, action) => {
+        return action.payload.torrents ? action.payload.torrents : initialState
+      }
+    )
+    .addCase(
+      seedStopped,
+      () => {
+        return initialState
+      }
     ).addCase(
       torrentAdded,
       (state, action) => {
