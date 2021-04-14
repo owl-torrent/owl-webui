@@ -22,6 +22,7 @@
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
+    "filesize": "^6.2.2",
     "immer": "^8.0.2",
     "notistack": "^1.0.5",
     "react": "^17.0.1",
