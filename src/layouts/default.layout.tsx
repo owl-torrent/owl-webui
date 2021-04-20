@@ -77,7 +77,7 @@ const Layout: React.FC<Props> = (props) => {
           <div className={clsx(classes.grow, classes.centerContent)}>
             <div className={classes.inlineFlex}>
               {isConnected &&
-                <GlobalStateActionButton className={clsx(classes.inlineFlex, classes.seedButton)} color="secondary" variant="contained" />
+                <GlobalStateActionButton className={clsx(classes.inlineFlex, classes.seedButton)} color="secondary" variant="outlined" />
               }
             </div>
           </div>
