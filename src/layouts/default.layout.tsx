@@ -1,29 +1,39 @@
 import React from 'react'
+import { Grid, AppBar, IconButton, Toolbar, List, ListItem, ListItemText, ListItemIcon, Hidden } from '@material-ui/core'
+import { Dashboard as DashboardIcon, Menu as MenuIcon } from '@material-ui/icons'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
 import ThemeAlterator from '../modules/theme/theme-alterator'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import DashboardIcon from '@material-ui/icons/Dashboard'
 import { useHistory, useRouteMatch } from 'react-router'
-import JoalAppBar from '../components/appbar'
-import {StompAuthButton} from '../modules/api'
+import { StompAuthButton, useApis } from '../modules/api'
+import logo from './app-logo.png'
+import { GlobalStateActionButton } from '../components/global'
+import clsx from 'clsx'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    boxShadow: `inset 0 -1px 0 ${theme.palette.divider}`
+  },
+  inlineFlex: {
+    display: 'inline-flex'
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  centerContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  seedButton: {
+    [theme.breakpoints.up('sm')]: {
+      width: 200,
     },
-    drawerMargin: {
-      marginLeft: `calc(${theme.spacing(7)} + 1px)`,
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: `calc(${theme.spacing(9)} + 1px)`,
-      },
-    }
-  }),
-)
+  }
+}))
 
 interface Props {
   children: React.ReactNode
@@ -41,7 +51,7 @@ const DrawerContent: React.FC<{}> = () => {
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      
+
     </List>
   )
 }
@@ -49,25 +59,37 @@ const DrawerContent: React.FC<{}> = () => {
 const Layout: React.FC<Props> = (props) => {
   const { children } = props
   const classes = useStyles()
-
-  const appBarActionsButtons = (
-    <>
-      <ThemeAlterator />
-      <StompAuthButton />
-    </>
-  )
+  const { apis: { isConnected } } = useApis()
 
   return (
     <>
-      <JoalAppBar
-        title="Joal"
-        ToolbarProps={{ variant: "dense" }}
-        actionsButtons={appBarActionsButtons}
-        drawerContent={<DrawerContent />}
-      />
+      <AppBar
+        position="sticky"
+        className={classes.appBar}
+        elevation={0}
+        color="transparent"
+      >
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+          <Hidden smDown><img src={logo} height="40px" alt="Joal" /></Hidden>
+          <div className={clsx(classes.grow, classes.centerContent)}>
+            <div className={classes.inlineFlex}>
+              {isConnected &&
+                <GlobalStateActionButton className={clsx(classes.inlineFlex, classes.seedButton)} color="secondary" variant="contained" />
+              }
+            </div>
+          </div>
+          <span className={classes.inlineFlex}>
+            <ThemeAlterator />
+            <StompAuthButton />
+          </span>
+        </Toolbar>
+      </AppBar>
 
       <Grid container direction="row">
-        <Grid item xs className={classes.drawerMargin}>
+        <Grid item xs>
           <main>
             {children}
           </main>

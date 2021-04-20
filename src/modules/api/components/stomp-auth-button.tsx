@@ -5,7 +5,7 @@ import { Wifi as ConnectedIcon, WifiOff as DisconnectedIcon } from '@material-ui
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   connected: {
-    color: '#fff'
+    color: 'inherit'
   },
   disconnected: {
     color: theme.palette.error.main

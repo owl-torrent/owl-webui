@@ -14,8 +14,8 @@ const ThemeAlterator: React.FC = () => {
     <Tooltip title="Toggle theme" arrow>
       <IconButton aria-label="Switch theme type" onClick={toggleThemeMode}>
         {themeOpts.palette?.mode === 'dark'
-          ? <DarkModeOnIcon htmlColor="#fff" />
-          : <LightModeOnIcon htmlColor="#fff" />
+          ? <DarkModeOnIcon />
+          : <LightModeOnIcon />
         }
       </IconButton>
     </Tooltip>

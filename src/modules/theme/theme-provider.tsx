@@ -7,9 +7,10 @@ import { Updater, useImmer } from 'use-immer'
 const LOCAL_STORAGE_KEY = 'theme.theme-options.v1'
 
 const loadThemeOptions = (): ThemeOptions => {
+  const userPreferedMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   const defaultVal: ThemeOptions = {
     palette: {
-      mode: 'light',
+      mode: userPreferedMode,
       primary: {
         main: '#00bfa5'
       },
@@ -25,7 +26,7 @@ const loadThemeOptions = (): ThemeOptions => {
   try {
     const parsed = JSON.parse(lss)
     if (parsed !== undefined && parsed !== null) {
-      return parsed
+      return Object.assign({}, defaultVal, parsed)
     }
   } catch (err) {
     localStorage.removeItem(LOCAL_STORAGE_KEY)
@@ -79,8 +80,9 @@ export const useThemeAlterator = () => {
     themeOpts: state,
     toggleThemeMode: () => {
       setState(current => {
-        const newMode = current.palette?.mode === 'light' ? 'dark' : 'light'
-        current.palette = {...current.palette, mode: newMode}
+        const mode = current.palette?.mode === 'light' ? 'dark' : 'light'
+        
+        current.palette = {...current.palette, mode: mode}
       })
     }
   }
