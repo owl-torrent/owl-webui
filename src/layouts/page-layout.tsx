@@ -83,7 +83,7 @@ const DrawerContent: React.FC<{}> = () => {
         </ListItem>
       )}
     </List>
-  }, [isConnected, matchSeedRoute, matchConfigRoute, matchDashboardRoute, matchReadTimeLogRoute, matchConnectApiRoute, history, classes.connectToServerButton])
+  }, [isConnected, matchSeedRoute, matchConfigRoute, matchDashboardRoute, matchReadTimeLogRoute, matchConnectApiRoute, history, classes.connectToServerButton, classes.offsetListIcon])
 }
 
 const Layout: React.FC<Props> = (props) => {
@@ -102,14 +102,14 @@ const Layout: React.FC<Props> = (props) => {
         elevation={0}
       >
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setOpenDrawer(current => !current)}>
+          <IconButton edge="start" aria-label="menu" sx={{ mr: 2 }} onClick={() => setOpenDrawer(current => !current)}>
             <MenuIcon />
           </IconButton>
           <Hidden smDown><img src={logo} height="40px" alt="Joal" /></Hidden>
           <div className={clsx(classes.grow, classes.centerContent)}>
             <div className={classes.inlineFlex}>
               {isConnected &&
-                <GlobalStateActionButton className={clsx(classes.inlineFlex, classes.seedButton)} color="secondary" variant="outlined" />
+                <GlobalStateActionButton className={clsx(classes.inlineFlex, classes.seedButton)} color="primary" variant="outlined" />
               }
             </div>
           </div>

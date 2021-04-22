@@ -12,10 +12,10 @@ const loadThemeOptions = (): ThemeOptions => {
     palette: {
       mode: userPreferedMode,
       primary: {
-        main: '#00bfa5'
+        main: '#4fc3f7'
       },
       secondary: {
-        main: '#a600bf'
+        main: '#7cb342'
       },
     }
   }

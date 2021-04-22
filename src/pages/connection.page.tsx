@@ -97,7 +97,7 @@ const ConnectionPage: React.FC<Props> = () => {
                   id="submit"
                   type="submit"
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                 >
                   Save parameters
                   </LoadingButton>
