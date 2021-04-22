@@ -1,12 +1,11 @@
 import React from 'react'
+import { Container, Divider, Grid, Paper, PaperProps, Tooltip, Typography } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import PageLayout from '../layouts/default.layout'
-import { Container, Divider, Grid, Hidden, Paper, PaperProps, Tooltip, Typography } from '@material-ui/core'
 import { HelpOutline as HelpOutlineIcon } from '@material-ui/icons'
-import { useSelector } from 'react-redux'
-import { globalSelectors, torrentsSelectors, bandwidthSelectors } from '../features/api'
 import clsx from 'clsx'
 import filesize from 'filesize'
+import { useSelector } from 'react-redux'
+import { bandwidthSelectors, globalSelectors, torrentsSelectors } from '../features/api'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,48 +60,46 @@ const Dashboard: React.FC<Props> = () => {
   React.useEffect(() => { document.title = "JOAL - Dashboard" }, [])
 
   return (
-    <PageLayout>
-      <Container maxWidth="sm" className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
 
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12} sx={{marginBottom: 1}}>
-            <GlobalStateTile />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TorrentCountTile />
-              </Grid>
-              <Grid item xs={6}>
-                <TorrentWithUploadTile />
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container spacing={1} alignItems="flex-start">
-              <Grid item xs={12}>
-                <OverallUploadSpeedTile />
-              </Grid>
-              <Grid item xs={12}>
-                <UploadPerHourTile />
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} md={3}>
-            <Grid container spacing={2}>
-              <Grid item xs={6} md={12}>
-                ratio calculator (input= down, seed) output = how many percent in 1 hour)
-              </Grid>
-            </Grid>
-          </Grid>
-
-
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item xs={12} sx={{ marginBottom: 1 }}>
+          <GlobalStateTile />
         </Grid>
-      </Container>
-    </PageLayout>
+
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TorrentCountTile />
+            </Grid>
+            <Grid item xs={6}>
+              <TorrentWithUploadTile />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={1} alignItems="flex-start">
+            <Grid item xs={12}>
+              <OverallUploadSpeedTile />
+            </Grid>
+            <Grid item xs={12}>
+              <UploadPerHourTile />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={3}>
+          <Grid container spacing={2}>
+            <Grid item xs={6} md={12}>
+              ratio calculator (input= down, seed) output = how many percent in 1 hour)
+              </Grid>
+          </Grid>
+        </Grid>
+
+
+      </Grid>
+    </Container>
   )
 }
 
@@ -123,7 +120,7 @@ const Tile: React.FC<TileProps> = (props) => {
 
   return <Paper elevation={elevation} className={clsx(className, classes.tileRoot)}>
     <div className={clsx(classes.tileTitle, titleClassName)}>
-      <Typography variant="overline" sx={{lineHeight: 1.7}}>
+      <Typography variant="overline" sx={{ lineHeight: 1.7 }}>
         {title}
       </Typography>
       {helperTooltip && <Tooltip className={classes.tileHelperTooltipIcon} placement="top" title={helperTooltip}><HelpOutlineIcon fontSize="small" /></Tooltip>}
@@ -196,7 +193,7 @@ const OverallUploadSpeedTile: React.FC = () => {
 
   const overallSpeed = React.useMemo(() => {
     return bandwidth.currentBandwidth
-  }, [bandwidth.currentBandwidth, Object.keys(bandwidth.torrents).length])
+  }, [bandwidth.currentBandwidth])
 
   if (Object.keys(bandwidth.torrents).length === 0) {
     return <></>
@@ -216,7 +213,7 @@ const UploadPerHourTile: React.FC = () => {
 
   const uploadPerHour = React.useMemo(() => {
     return bandwidth.currentBandwidth * 60 * 60
-  }, [bandwidth.currentBandwidth, Object.keys(bandwidth.torrents).length])
+  }, [bandwidth.currentBandwidth])
 
   if (Object.keys(bandwidth.torrents).length === 0) {
     return <></>
