@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, IconButton, Toolbar, List, ListItem, ListItemText, ListItemIcon, Hidden } from '@material-ui/core'
+import { AppBar, IconButton, Toolbar, List, ListItem, ListItemText, ListItemIcon, Hidden, useMediaQuery, useTheme } from '@material-ui/core'
 import { Dashboard as DashboardIcon, Menu as MenuIcon, Subject as SubjectIcon, Settings as SettingsIcon, UploadFile as UploadFileIcon, WifiOff as WifiOffIcon } from '@material-ui/icons'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import ThemeAlterator from '../modules/theme/theme-alterator'
@@ -53,7 +53,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const DrawerContent: React.FC<{}> = () => {
+const DrawerContent: React.FC<{onClickItem?: () => void}> = ({onClickItem = () => {}}) => {
   const classes = useStyles()
   const history = useHistory()
   const { apis: { isConnected } } = useApis()
@@ -77,13 +77,14 @@ const DrawerContent: React.FC<{}> = () => {
 
     return <List dense>
       {items.map(item =>
-        <ListItem key={item.name} disabled={item.stompRequired && !isConnected} button selected={item.match !== null} onClick={() => history.push(item.sendTo)}>
+        <ListItem key={item.name} disabled={item.stompRequired && !isConnected} button selected={item.match !== null}
+        onClick={() => {history.push(item.sendTo); onClickItem()}}>
           <ListItemIcon className={classes.offsetListIcon}>{item.icon}</ListItemIcon>
           <ListItemText primary={item.name} />
         </ListItem>
       )}
     </List>
-  }, [isConnected, matchSeedRoute, matchConfigRoute, matchDashboardRoute, matchReadTimeLogRoute, matchConnectApiRoute, history, classes.connectToServerButton, classes.offsetListIcon])
+  }, [onClickItem, isConnected, matchSeedRoute, matchConfigRoute, matchDashboardRoute, matchReadTimeLogRoute, matchConnectApiRoute, history, classes.connectToServerButton, classes.offsetListIcon])
 }
 
 const Layout: React.FC<Props> = (props) => {
@@ -92,7 +93,11 @@ const Layout: React.FC<Props> = (props) => {
   const { apis: { isConnected } } = useApis()
   const [openDrawer, setOpenDrawer] = React.useState(false)
 
-  const list = <DrawerContent />
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+
+  const list = <DrawerContent onClickItem={isMobile ? () => {setOpenDrawer(false)} : () => {}} />
 
   return (
     <div>

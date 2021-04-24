@@ -198,11 +198,11 @@ const NotFound: React.FC<Props> = () => {
           <span className={classes.zero}><span className={classes.screenReaderText}>0</span></span>
           <span className={classes.four}><span className={classes.screenReaderText}>4</span></span>
         </section>
-        <Typography variant="h4" className={classes.errorText}>Oops ! La resource à laquelle vous essayez d'acceder n'existe pas ou a disparue</Typography>
+        <Typography variant="h4" className={classes.errorText}>Whoopsie ! This page does not seems to exist</Typography>
       </Grid>
       <Grid item className={classes.goBackToHomeWrapper}>
         <Button variant="contained" onClick={() => history.replace('/')}>
-          Retour a l'acceuil
+          Back to home
         </Button>
       </Grid>
     </Grid>
