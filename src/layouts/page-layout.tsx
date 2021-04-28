@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   mainContent: {
     flexGrow: 1,
-    paddingLeft: theme.spacing(1),
   },
   connectToServerButton: {
     color: theme.palette.error.main

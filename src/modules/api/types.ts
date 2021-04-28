@@ -38,6 +38,7 @@ export interface Tracker {
   announceHistory: AnnounceHistory[]
 }
 
+export type TorrentTrackersMap = { [hashKey: string]: Tracker }
 export interface Torrent {
   infohash: string
   name: string
@@ -47,7 +48,7 @@ export interface Torrent {
   seeders: number
   leechers: number
   uploaded: number
-  trackers: { [hashKey: string]: Tracker }
+  trackers: TorrentTrackersMap
 }
 
 export interface TorrentBandWidth {

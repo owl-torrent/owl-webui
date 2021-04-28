@@ -1563,6 +1563,15 @@
     react-is "^17.0.0"
     react-transition-group "^4.4.0"
 
+"@material-ui/data-grid@^4.0.0-alpha.26":
+  version "4.0.0-alpha.26"
+  resolved "https://registry.yarnpkg.com/@material-ui/data-grid/-/data-grid-4.0.0-alpha.26.tgz#7137e4a82a1261ad2ce02116525b9920496ceb33"
+  integrity sha512-mA2mncqQAISRLl7FR5NSmlus0wLQ5MSbIjg7WJyGKoOojNwEhK46nmYPvukljXMRoaKQpiv4U+ULI5CuuxlXgQ==
+  dependencies:
+    "@material-ui/utils" "^5.0.0-alpha.14"
+    prop-types "^15.7.2"
+    reselect "^4.0.0"
+
 "@material-ui/icons@5.0.0-alpha.28":
   version "5.0.0-alpha.28"
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-5.0.0-alpha.28.tgz#eb04c095e635b657bc715f5fedd5c1dd9f26fb8a"
@@ -1649,6 +1658,17 @@
   version "5.0.0-alpha.29"
   resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-5.0.0-alpha.29.tgz#e7de69ddbae163e6f12c653d936ed624cec81160"
   integrity sha512-hP0GD9yXo/29kpLHyz9bzwPxRQvd14l/7TIpL84DvSaw7V3bQV3ydTC/nykKmLrFFkIuTyrSZkKfPTpmObigXQ==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@types/prop-types" "^15.7.3"
+    "@types/react-is" "^16.7.1 || ^17.0.0"
+    prop-types "^15.7.2"
+    react-is "^17.0.0"
+
+"@material-ui/utils@^5.0.0-alpha.14":
+  version "5.0.0-alpha.31"
+  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-5.0.0-alpha.31.tgz#a4ff785d4c643f9b25dd3bdf7cc1b8ef00adf954"
+  integrity sha512-4OzVD12+HbfWMftwiHCBforgjkhzbWMdK9GTQLQcekjdG2qpi41BGvanPpHjlxegzou0A2MEaULBvWqsKrUP9A==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@types/prop-types" "^15.7.3"
